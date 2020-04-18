@@ -22,14 +22,6 @@ This repository houses my personal dotfiles. The intent is that, should I ever n
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
    ```
 
-3. Install [nvm](https://github.com/nvm-sh/nvm) by copying and pasting the below command into a macOS Terminal.
-
-   ```bash
-   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-   ```
-
-   > Note: This is not a strict requirement in order to run the remainder of the scripts. I present the command here so that, if you wish, you may review the contents of the script before it is executed.
-
 ## How to use
 
 ### Initialize your own dotfiles repository
@@ -63,7 +55,7 @@ mkdir -p ~/.dotfiles/git
 cat >> ~/.gitconfig_local << EOF
 [user]
   name  = First Last
-  email = user@example.com
+  email = your_email@example.com
 [github]
   user  = your-git-user
 EOF
@@ -117,6 +109,69 @@ chmod +x setup.sh
 ```
 
 If you have used my `.gitconfig` file for inspiration, you **must** add your own `user.name`, `user.email`, and `github.user` entries to your `.gitconfig` file (or to a `.gitconfig_local` file as I have done). If I were to include my own `git` information in this repository, your commits could be mistakenly credited to me!
+
+## Additional setup
+
+The list below enumerates additional steps that I would take to set up my development environment, but are not strictly required for the dotfiles to work.
+
+- Modify the `Brewfile` to support your needs, then run `brew bundle` to install everything.
+
+- Set up [commit signature verification](https://help.github.com/en/github/authenticating-to-github/managing-commit-signature-verification)
+
+- Use an SSH key to [connect to GitHub](https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
+
+- Switch to the [fish shell](https://fishshell.com/)
+
+  Copy and paste the below commands into a macOS Terminal.
+
+  ```bash
+  echo /usr/local/bin/fish | sudo tee -a /etc/shells
+  chsh -s /usr/local/bin/fish
+  ```
+
+  > Do note that the `fish` shell is _not_ fully POSIX-compliant; that said, I find the ease-of-use to be more important than the inconvenience of needing to run `bash <script>.sh` every so often.
+
+- Install [nvm](https://github.com/nvm-sh/nvm)
+
+  Copy and paste the below command into a macOS Terminal, then verify with `nvm --version`.
+
+  ```bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  ```
+
+  > If you are using the `fish` shell, check out [fish-nvm](https://github.com/FabioAntunes/fish-nvm).
+
+  Short list of useful commands:
+
+  - `nvm ls` to list all of the supported Node releases available to install
+  - `nvm use latest` to install the latest Node release and switch to it
+  - `nvm alias default node` to set the default Node version
+
+- Install [yarn](https://yarnpkg.com/)
+
+  Copy and paste the below command into a macOS Terminal, then verify with `yarn --version`.
+
+  ```bash
+  curl -o- -L https://yarnpkg.com/install.sh | bash
+  ```
+
+  > If you are using the `fish` shell, you will need to add `set -gx PATH $HOME/.yarn/bin $PATH` to your `config.fish` file.
+
+  I would suggest using the install script rather than installing via Homebrew.
+
+  > This is because installing `yarn` through Homebrew installs `node`, since `yarn` is dependent on `node` to function; however, we are managing `node` via `nvm`. There once existed an option to install `yarn` without `node`, but this no longer applies ([1](https://github.com/Homebrew/homebrew-core/commit/a34c721586fece6d36d9b60fec5760e1b3361f11), [2](https://github.com/yarnpkg/yarn/issues/3255)).
+
+- Set up [Go](https://golang.org/)
+
+  Assuming `brew info golang` succeeds, you can verify with `go version`.
+
+  > Note: You should read [how to write Go code](https://golang.org/doc/code.html) to understand how to properly organize Go code to support canonical imports.
+
+- Set up [Rust](https://www.rust-lang.org/)
+
+  Assuming `brew info rustup` succeeds, run `rustup-init` to install `rustc` and `cargo`, then verify with `rustc --version`.
+
+  > If you are using the `fish` shell, you will need to add `set -gx PATH $HOME/.cargo/bin $PATH` to your `config.fish` file.
 
 ## Acknowledgements
 
