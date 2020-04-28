@@ -1,7 +1,11 @@
 # Compiled Python files
-*.pyc\
+*.pyc
+
+# Compiled C++ files
+*.out
 
 # IDE configuration files
+.idea
 .vscode
 
 # Folder view configuration files
