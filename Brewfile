@@ -1,45 +1,49 @@
 cask_args appdir: '/Applications'
 
-# set up brew with the default taps
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
-tap "homebrew/services"
-tap "mas-cli/tap"
-
 # additional useful taps
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
+tap "mas-cli/tap"
+
 # use `brew install brew-caveats` to install
+# use `brew caveats $(brew list)` to show caveats for all installed packages
 tap "rafaelgarrido/homebrew-caveats"
+
 # use `brew install dart` to install a stable channel release
 tap "dart-lang/dart"
+
 # use `brew cask install <version>` to install a version of the dotnet SDK
+# https://github.com/isen-ng/homebrew-dotnet-sdk-versions
+# NOTE: This could possibly conflict with the official dotnet cask
 tap "isen-ng/dotnet-sdk-versions"
+
+# use `brew cask install <version>` to install a version of OpenJDK
+# https://github.com/AdoptOpenJDK/homebrew-openjdk
+tap "adoptopenjdk/openjdk"
 
 ###############################################################################
 # install brew formulae                                                       #
 ###############################################################################
 
 # install GNU core utilities (those that come with macOS are outdated)
-
-# remember to add `$(--prefix coreutils)/libexec/gnubin` to `$PATH`.
+# remember to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 brew "coreutils"
 # install some other useful utilities like `sponge`
 brew "moreutils"
-# install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
+# install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
+# add `$(brew --prefix findutils)/libexec/gnubin` to `$PATH`
+# if you would prefer these to be the defaults.
 brew "findutils"
 # install GNU `sed`, overwriting the built-in `sed`
-brew "gnu-sed", args: ["with-default-names"]
+# remember to add `$(brew --prefix gnu-sed)/libexec/gnubin` to `$PATH`.
+brew "gnu-sed"
 # install wget with IRI support
-brew "wget" , args: ["with-iri"]
+brew "wget"
 # install more recent versions of some macOS tools
 brew "bash"
 brew "git"
 brew "grep"
 brew "screen"
-
-# install other useful binaries
 
 # Official Amazon AWS command-line interface
 # https://aws.amazon.com/cli/
@@ -50,8 +54,15 @@ brew "azure-cli"
 # Programmable completion for Bash 4.1+
 # https://github.com/scop/bash-completion
 brew "bash-completion"
+# Clone of cat(1) with syntax highlighting and Git integration
+# https://github.com/sharkdp/bat
+brew "bat"
+# Command-line benchmark tool
+# https://github.com/Gabriel439/bench
+brew "bench"
 # Formulae caveats shortcut for Homebrew package manager
 # https://github.com/rafaelgarrido/homebrew-caveats
+# Requires `tap "rafaelgarrido/homebrew-caveats"`
 brew "brew-caveats"
 # Statistics utility to count lines of code
 # https://github.com/AlDanial/cloc
@@ -67,6 +78,7 @@ brew "ctags"
 brew "curl"
 # The Dart SDK (from dart-lang/dart tap)
 # https://dart.dev/get-dart
+# Requires `tap "dart-lang/dart"`
 brew "dart"
 # Good-lookin' diffs with diff-highlight and more
 # https://github.com/so-fancy/diff-so-fancy
@@ -107,6 +119,9 @@ brew "git-quick-stats"
 # Open source programming language to build simple/reliable/efficient software
 # https://golang.org/
 brew "go"
+# Go version management
+# https://github.com/syndbg/goenv
+brew "goenv"
 # GNU Pretty Good Privacy (PGP) package
 # https://gnupg.org/
 brew "gnupg"
@@ -140,9 +155,6 @@ brew "less"
 # NCurses Disk Usage
 # https://dev.yorhel.nl/ncdu
 brew "ncdu"
-# Ambitious Vim-fork focused on extensibility and agility
-# https://neovim.io/
-brew "neovim"
 # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
 # https://nginx.org/
 brew "nginx", restart_service: true
@@ -155,12 +167,21 @@ brew "nmap"
 # Cryptography and SSL/TLS Toolkit
 # https://www.openssl.org/
 brew "openssl"
+# Execute binaries from Python packages in isolated environments
+# https://github.com/pipxproject/pipx
+brew "pipx"
 # Object-relational database system
 # https://www.postgresql.org/
 brew "postgresql", restart_service: true
 # Interpreted, interactive, object-oriented programming language
 # https://www.python.org/
 brew "python"
+# Python version management
+# https://github.com/pyenv/pyenv
+brew "pyenv"
+# Ruby version manager
+# https://github.com/rbenv/rbenv#readme
+brew "rbenv"
 # Library for command-line editing
 # https://tiswww.case.edu/php/chet/readline/rltop.html
 brew "readline"
@@ -185,6 +206,15 @@ brew "shellcheck"
 # Command-line interface for https://speedtest.net bandwidth tests
 # https://github.com/sivel/speedtest-cli
 brew "speedtest-cli"
+# Command-line interface for SQLite
+# https://sqlite.org/index.html
+brew "sqlite3"
+# Add a public key to a remote machine's authorized_keys file
+# https://www.openssh.com/
+brew "ssh-copy-id"
+# The cross-shell prompt for astronauts
+# https://starship.rs/
+brew "starship"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 # https://www.gnu.org/software/stow/
 brew "stow"
@@ -194,6 +224,9 @@ brew "the_silver_searcher"
 # Text interface for git repositories
 # https://jonas.github.io/tig/
 brew "tig"
+# Simplified and community-driven man pages
+# https://tldr.sh/
+brew "tldr"
 # Terminal multiplexer
 # https://github.com/tmux/tmux/wiki
 brew "tmux"
@@ -203,6 +236,9 @@ brew "trash"
 # Display directories as trees (with optional color/HTML output)
 # http://mama.indstate.edu/users/ice/tree/
 brew "tree"
+# Vi 'workalike' with many additional features
+# https://www.vim.org/
+brew "vim"
 # Executes a program periodically, showing output fullscreen
 # https://gitlab.com/procps-ng/procps
 brew "watch"
@@ -221,6 +257,12 @@ brew "xz"
 # Download YouTube videos from the command-line
 # https://ytdl-org.github.io/youtube-dl/
 brew "youtube-dl"
+# Tracks most-used directories to make cd smarter
+# https://github.com/rupa/z
+brew "z"
+# General-purpose lossless data-compression library
+# https://zlib.net/
+brew "zlib"
 
 ###############################################################################
 # install casks                                                               #
@@ -229,10 +271,12 @@ brew "youtube-dl"
 # some casks are uncommented as these apps are especially useful              #
 ###############################################################################
 
-cask "adoptopenjdk"
+# cask "adoptopenjdk"
 # cask "aerial"
 cask "alfred"
-cask "anaconda"
+# cask "anaconda"
+# cask "android-sdk"
+# cask "android-studio"
 # cask "authy"
 # cask "azure-data-studio"
 # cask "bartender"
@@ -250,6 +294,7 @@ cask "google-chrome"
 # cask "handbrake"
 # cask "hazel"
 # cask "iina"
+# cask "imageoptim"
 cask "iterm2"
 # cask "java"
 # cask "jetbrains-toolbox"
@@ -267,6 +312,7 @@ cask "iterm2"
 # cask "powershell"
 # cask "protonmail-bridge"
 # cask "protonvpn"
+# cask "react-native-debugger"
 cask "rectangle"
 # cask "rocket"
 # cask "sketch"
