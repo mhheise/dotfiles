@@ -1,5 +1,5 @@
 function z.complete
-  z -l $argv | awk '{print $2}'
+    z -l $argv | awk '{print $2}'
 end
 
 complete -c z -s c -d "Restrict matches to subdirectories of the current directory"

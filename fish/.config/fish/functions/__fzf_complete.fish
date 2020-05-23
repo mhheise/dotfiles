@@ -58,20 +58,20 @@ function __fzf_complete -d 'fzf completion and print selection back to commandli
 
         set -l query
         string join -- \n $complist \
-        | eval (__fzfcmd) (string escape --no-quoted -- $initial_query) --print-query (__fzf_complete_opts) \
-        | cut -f1 \
-        | while read -l r
+            | eval (__fzfcmd) (string escape --no-quoted -- $initial_query) --print-query (__fzf_complete_opts) \
+            | cut -f1 \
+            | while read -l r
             # first line is the user entered query
             if test -z "$query"
                 set query $r
-            # rest of lines are selected candidates
+                # rest of lines are selected candidates
             else
                 set result $result $r
             end
-          end
+        end
 
         # exit if user canceled
-        if test -z "$query" ;and test -z "$result"
+        if test -z "$query"; and test -z "$result"
             commandline -f repaint
             return
         end
@@ -90,7 +90,7 @@ function __fzf_complete -d 'fzf completion and print selection back to commandli
                 commandline -t -- (string escape -- $r)
             case '"'
                 if string match '*"*' -- $r >/dev/null
-                    commandline -t --  (string escape -- $r)
+                    commandline -t -- (string escape -- $r)
                 else
                     commandline -t -- '"'$r'"'
                 end

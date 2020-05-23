@@ -1,3 +1,3 @@
 function npm -d "node package manager" -w npm
-  __nvm_run "npm" $argv
+    __nvm_run "npm" $argv
 end

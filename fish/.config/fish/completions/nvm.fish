@@ -2,19 +2,19 @@
 # Inspired on (https://github.com/derekstavis/plugin-nvm)
 
 function __nvm_complete_ls_remote
-  if not test "$__nvm_ls_remote"
-    set -g __nvm_ls_remote (nvm ls-remote | grep -Po '(?:iojs-)?v[0-9]\.[0-9]\.[0-9]*')
-  end
+    if not test "$__nvm_ls_remote"
+        set -g __nvm_ls_remote (nvm ls-remote | grep -Po '(?:iojs-)?v[0-9]\.[0-9]\.[0-9]*')
+    end
 
-  printf "%s\n" $__nvm_ls_remote
+    printf "%s\n" $__nvm_ls_remote
 end
 
 function __nvm_complete_ls
-  if not test "$__nvm_ls"
-    set -g __nvm_ls (nvm ls | grep -Po '[[:space:]].\K(v[0-9]\.[0-9]\.[0-9]*)')
-  end
+    if not test "$__nvm_ls"
+        set -g __nvm_ls (nvm ls | grep -Po '[[:space:]].\K(v[0-9]\.[0-9]\.[0-9]*)')
+    end
 
-  printf "%s\n" $__nvm_ls
+    printf "%s\n" $__nvm_ls
 end
 
 #Install
