@@ -1,4 +1,4 @@
-set -g fishtape_version 2.1.2
+set -g fishtape_version 2.1.3
 
 complete -c fishtape -n __fish_use_subcommand -a --help -d "Show usage help"
 complete -c fishtape -n __fish_use_subcommand -a --version -d "$fishtape_version"
@@ -137,7 +137,7 @@ function fishtape -d "TAP-based test runner"
                     for (i = 0; i < count[$1]; i++) {
                         print\
                             (mesg = batch[$1 i "mesg"])\
-                            ? mesg : sub(/ok/, "ok " ++total, batch[$1 i])\
+                            ? mesg : sub(/ok/, "ok " (++total), batch[$1 i])\
                             ? batch[$1 i] ((error = batch[$1 i "error"]) && ++failed ? "\n" error : "") : ""
                         todo = (batch[$1 i "todo"]) ? todo + 1 : todo
                         fflush()
